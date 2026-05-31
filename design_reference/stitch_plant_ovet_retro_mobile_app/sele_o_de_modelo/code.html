@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Plantão Vet - Selecione o Tipo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&amp;family=Quicksand:wght@500&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#1a1c1b",
+                        "secondary-fixed-dim": "#e3bcce",
+                        "inverse-primary": "#abcec1",
+                        "on-background": "#1a1c1b",
+                        "primary-fixed-dim": "#abcec1",
+                        "background": "#faf9f7",
+                        "surface-variant": "#e3e2e0",
+                        "on-surface-variant": "#414845",
+                        "on-primary-fixed": "#002018",
+                        "inverse-surface": "#2f3130",
+                        "secondary-fixed": "#ffd8e9",
+                        "on-secondary-fixed-variant": "#5b3e4d",
+                        "surface-dim": "#dadad8",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e3e2e0",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#2d4d43",
+                        "tertiary": "#665e3c",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface": "#faf9f7",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#faf9f7",
+                        "outline-variant": "#c1c8c4",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#f1f1ef",
+                        "surface-container-low": "#f4f4f1",
+                        "outline": "#717975",
+                        "secondary": "#745665",
+                        "primary": "#44655a",
+                        "on-tertiary-container": "#6d6542",
+                        "primary-fixed": "#c6eadc",
+                        "primary-container": "#c7ebdd",
+                        "surface-container": "#eeeeec",
+                        "tertiary-container": "#efe3b8",
+                        "on-secondary-fixed": "#2b1421",
+                        "on-tertiary-fixed-variant": "#4e4727",
+                        "on-tertiary-fixed": "#211b02",
+                        "secondary-container": "#fdd5e7",
+                        "tertiary-fixed": "#eee3b7",
+                        "surface-container-high": "#e8e8e6",
+                        "surface-tint": "#44655a",
+                        "on-secondary-container": "#795a69",
+                        "on-primary-container": "#4b6b60",
+                        "tertiary-fixed-dim": "#d1c79d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "12px",
+                        "container-padding": "16px",
+                        "unit": "4px",
+                        "offset-shadow": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "body-lg": ["Quicksand"],
+                        "headline-md": ["Space Grotesk"],
+                        "pixel-data": ["Space Mono"],
+                        "label-caps": ["Space Mono"],
+                        "body-md": ["Quicksand"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-1px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "26px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "pixel-data": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #c7ebdd; /* primary-container */
+        }
+        .retro-border {
+            border: 3px solid #1a1c1b;
+        }
+        .retro-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(26,28,27,1);
+        }
+        .retro-shadow-hover:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px rgba(26,28,27,1);
+        }
+        .retro-shadow-active:active {
+            transform: translate(4px, 4px);
+            box-shadow: none;
+        }
+        
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf9f7;
+            border-left: 2px solid #1a1c1b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e3bcce;
+            border: 2px solid #1a1c1b;
+            border-radius: 4px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col font-body-md text-on-surface antialiased overflow-x-hidden pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-secondary dark:bg-secondary-fixed-dim text-on-secondary dark:text-on-secondary-fixed font-headline-sm text-headline-sm docked full-width top-0 z-50 border-b-3 border-on-surface dark:border-inverse-surface shadow-[4px_4px_0px_0px_rgba(26,28,27,1)] flex justify-between items-center w-full px-container-padding h-16 retro-border mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none cursor-pointer" data-icon="arrow_back">arrow_back</span>
+</div>
+<div class="font-pixel-data text-headline-sm text-on-secondary dark:text-on-secondary-fixed uppercase tracking-widest text-center truncate">PLANTÃO_VET.EXE</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none cursor-pointer" data-icon="settings">settings</span>
+</div>
+</header>
+<main class="flex-grow flex flex-col px-container-padding max-w-2xl mx-auto w-full gap-4 pt-4">
+<!-- Header Window -->
+<div class="bg-surface retro-border retro-shadow rounded-lg overflow-hidden mb-2">
+<div class="bg-tertiary-container border-b-[3px] border-on-surface px-4 py-2 flex items-center justify-between">
+<h1 class="font-headline-md text-headline-md text-on-surface">Selecione o Tipo</h1>
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="p-4 bg-surface-bright font-body-md text-on-surface-variant">
+<p>Escolha um modelo de prontuário para iniciar o registro do plantão.</p>
+</div>
+</div>
+<!-- Cards List -->
+<div class="flex flex-col gap-4 w-full">
+<!-- Card: Internação -->
+<button class="w-full bg-secondary-container retro-border retro-shadow retro-shadow-hover retro-shadow-active rounded-lg overflow-hidden flex flex-col transition-all cursor-pointer text-left group">
+<div class="bg-secondary-fixed-dim border-b-[3px] border-on-surface px-4 py-2 flex items-center justify-between">
+<span class="font-pixel-data text-on-surface uppercase tracking-widest text-sm">TEMPLATE_01</span>
+<span class="material-symbols-outlined text-on-surface">local_hospital</span>
+</div>
+<div class="p-4 flex items-center gap-4">
+<div class="bg-surface p-3 rounded-full retro-border">
+<span class="material-symbols-outlined text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Internação</h2>
+<span class="font-body-md text-on-surface-variant text-sm">Rotina geral e monitoramento</span>
+</div>
+<div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+</button>
+<!-- Card: UTI -->
+<button class="w-full bg-error-container retro-border retro-shadow retro-shadow-hover retro-shadow-active rounded-lg overflow-hidden flex flex-col transition-all cursor-pointer text-left group">
+<div class="bg-[#ffb4ab] border-b-[3px] border-on-surface px-4 py-2 flex items-center justify-between">
+<span class="font-pixel-data text-on-surface uppercase tracking-widest text-sm">TEMPLATE_02</span>
+<span class="material-symbols-outlined text-on-surface">monitor_heart</span>
+</div>
+<div class="p-4 flex items-center gap-4">
+<div class="bg-surface p-3 rounded-full retro-border">
+<span class="material-symbols-outlined text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">ecg</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">UTI</h2>
+<span class="font-body-md text-on-surface-variant text-sm">Cuidados intensivos e críticos</span>
+</div>
+<div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+</button>
+<!-- Card: Pós-cirúrgico -->
+<button class="w-full bg-tertiary-container retro-border retro-shadow retro-shadow-hover retro-shadow-active rounded-lg overflow-hidden flex flex-col transition-all cursor-pointer text-left group">
+<div class="bg-tertiary-fixed border-b-[3px] border-on-surface px-4 py-2 flex items-center justify-between">
+<span class="font-pixel-data text-on-surface uppercase tracking-widest text-sm">TEMPLATE_03</span>
+<span class="material-symbols-outlined text-on-surface">healing</span>
+</div>
+<div class="p-4 flex items-center gap-4">
+<div class="bg-surface p-3 rounded-full retro-border">
+<span class="material-symbols-outlined text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">content_cut</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Pós-cirúrgico</h2>
+<span class="font-body-md text-on-surface-variant text-sm">Recuperação anestésica e dor</span>
+</div>
+<div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+</button>
+<!-- Card: Observação -->
+<button class="w-full bg-primary-fixed retro-border retro-shadow retro-shadow-hover retro-shadow-active rounded-lg overflow-hidden flex flex-col transition-all cursor-pointer text-left group">
+<div class="bg-primary-container border-b-[3px] border-on-surface px-4 py-2 flex items-center justify-between">
+<span class="font-pixel-data text-on-surface uppercase tracking-widest text-sm">TEMPLATE_04</span>
+<span class="material-symbols-outlined text-on-surface">visibility</span>
+</div>
+<div class="p-4 flex items-center gap-4">
+<div class="bg-surface p-3 rounded-full retro-border">
+<span class="material-symbols-outlined text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">hourglass_empty</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Observação</h2>
+<span class="font-body-md text-on-surface-variant text-sm">Curto período e fluidoterapia</span>
+</div>
+<div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+</button>
+<!-- Card: Personalizado -->
+<button class="w-full bg-surface-variant retro-border retro-shadow retro-shadow-hover retro-shadow-active rounded-lg overflow-hidden flex flex-col transition-all cursor-pointer text-left group">
+<div class="bg-surface-container-high border-b-[3px] border-on-surface px-4 py-2 flex items-center justify-between">
+<span class="font-pixel-data text-on-surface uppercase tracking-widest text-sm">TEMPLATE_CUSTOM</span>
+<span class="material-symbols-outlined text-on-surface">tune</span>
+</div>
+<div class="p-4 flex items-center gap-4 border-2 border-dashed border-on-surface-variant rounded-md m-2 bg-surface-bright">
+<div class="bg-secondary-container p-3 rounded-full retro-border">
+<span class="material-symbols-outlined text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">draw</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Personalizado</h2>
+<span class="font-body-md text-on-surface-variant text-sm">Crie seu próprio modelo</span>
+</div>
+<div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+</button>
+</div>
+</main>
+<!-- Floating Action Button -->
+<div class="fixed bottom-24 right-6 z-50 md:bottom-8">
+<button class="bg-secondary text-on-secondary retro-border retro-shadow retro-shadow-hover retro-shadow-active w-14 h-14 rounded-full flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-gutter py-2 bg-surface dark:bg-surface-dim border-t-3 border-on-surface dark:border-inverse-surface z-50 retro-border border-l-0 border-r-0 border-b-0 h-[72px]">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface opacity-70 hover:opacity-100 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps mt-1 font-pixel-data text-primary">Início</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 -translate-y-1 shadow-[4px_4px_0px_0px_rgba(26,28,27,1)] border-2 border-on-surface hover:opacity-100 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="list_alt" data-weight="fill" style="font-variation-settings: 'FILL' 1;">list_alt</span>
+<span class="font-label-caps text-label-caps mt-1 font-pixel-data text-primary">Pacientes</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface opacity-70 hover:opacity-100 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="history">history</span>
+<span class="font-label-caps text-label-caps mt-1 font-pixel-data text-primary">Histórico</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface opacity-70 hover:opacity-100 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps mt-1 font-pixel-data text-primary">Perfil</span>
+</button>
+</nav>
+</body></html>

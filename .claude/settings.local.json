@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p design_reference)",
+      "Bash(unzip -o design_reference.zip -d design_reference)",
+      "Bash(npm -v)",
+      "Bash(npx -v)",
+      "Bash(node -e \"const fs=require\\('fs'\\);const l=fs.readFileSync\\('src/data/templates.ts','utf8'\\).split\\('\\\\n'\\)[35];console.log\\('line36 codepoints:', [...l].map\\(c=>c.charCodeAt\\(0\\).toString\\(16\\)\\).join\\(' '\\)\\);console.log\\('slug test:', 'Saturação / SpO2'.toLowerCase\\(\\).normalize\\('NFD'\\).replace\\(/[̀-ͯ]/g,''\\).replace\\(/[^a-z0-9]+/g,'_'\\).replace\\(/^_|_$/g,''\\)\\);\")",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "mcp__antigravity-browser__new_page",
+      "mcp__antigravity-browser__fill",
+      "mcp__antigravity-browser__click",
+      "mcp__antigravity-browser__take_screenshot",
+      "mcp__antigravity-browser__take_snapshot",
+      "mcp__antigravity-browser__evaluate_script"
+    ]
+  }
+}

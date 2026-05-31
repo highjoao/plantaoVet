@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PlantãoVet - Preview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&amp;family=Quicksand:wght@500;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "on-surface": "#1a1c1b",
+                            "secondary-fixed-dim": "#e3bcce",
+                            "inverse-primary": "#abcec1",
+                            "on-background": "#1a1c1b",
+                            "primary-fixed-dim": "#abcec1",
+                            "background": "#faf9f7",
+                            "surface-variant": "#e3e2e0",
+                            "on-surface-variant": "#414845",
+                            "on-primary-fixed": "#002018",
+                            "inverse-surface": "#2f3130",
+                            "secondary-fixed": "#ffd8e9",
+                            "on-secondary-fixed-variant": "#5b3e4d",
+                            "surface-dim": "#dadad8",
+                            "on-error-container": "#93000a",
+                            "surface-container-highest": "#e3e2e0",
+                            "on-secondary": "#ffffff",
+                            "on-primary-fixed-variant": "#2d4d43",
+                            "tertiary": "#665e3c",
+                            "error-container": "#ffdad6",
+                            "surface-container-lowest": "#ffffff",
+                            "on-primary": "#ffffff",
+                            "surface": "#faf9f7",
+                            "on-error": "#ffffff",
+                            "error": "#ba1a1a",
+                            "surface-bright": "#faf9f7",
+                            "outline-variant": "#c1c8c4",
+                            "on-tertiary": "#ffffff",
+                            "inverse-on-surface": "#f1f1ef",
+                            "surface-container-low": "#f4f4f1",
+                            "outline": "#717975",
+                            "secondary": "#745665",
+                            "primary": "#44655a",
+                            "on-tertiary-container": "#6d6542",
+                            "primary-fixed": "#c6eadc",
+                            "primary-container": "#c7ebdd",
+                            "surface-container": "#eeeeec",
+                            "tertiary-container": "#efe3b8",
+                            "on-secondary-fixed": "#2b1421",
+                            "on-tertiary-fixed-variant": "#4e4727",
+                            "on-tertiary-fixed": "#211b02",
+                            "secondary-container": "#fdd5e7",
+                            "tertiary-fixed": "#eee3b7",
+                            "surface-container-high": "#e8e8e6",
+                            "surface-tint": "#44655a",
+                            "on-secondary-container": "#795a69",
+                            "on-primary-container": "#4b6b60",
+                            "tertiary-fixed-dim": "#d1c79d"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.125rem",
+                            "lg": "0.25rem",
+                            "xl": "0.5rem",
+                            "full": "0.75rem"
+                    },
+                    "spacing": {
+                            "gutter": "12px",
+                            "container-padding": "16px",
+                            "unit": "4px",
+                            "offset-shadow": "4px"
+                    },
+                    "fontFamily": {
+                            "headline-sm": [
+                                    "Space Grotesk"
+                            ],
+                            "headline-lg": [
+                                    "Space Grotesk"
+                            ],
+                            "body-lg": [
+                                    "Quicksand"
+                            ],
+                            "headline-md": [
+                                    "Space Grotesk"
+                            ],
+                            "pixel-data": [
+                                    "Space Mono"
+                            ],
+                            "label-caps": [
+                                    "Space Mono"
+                            ],
+                            "body-md": [
+                                    "Quicksand"
+                            ]
+                    },
+                    "fontSize": {
+                            "headline-sm": [
+                                    "20px",
+                                    {
+                                            "lineHeight": "28px",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "headline-lg": [
+                                    "32px",
+                                    {
+                                            "lineHeight": "40px",
+                                            "letterSpacing": "-1px",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "body-lg": [
+                                    "18px",
+                                    {
+                                            "lineHeight": "26px",
+                                            "fontWeight": "500"
+                                    }
+                            ],
+                            "headline-md": [
+                                    "24px",
+                                    {
+                                            "lineHeight": "32px",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "pixel-data": [
+                                    "14px",
+                                    {
+                                            "lineHeight": "20px",
+                                            "fontWeight": "400"
+                                    }
+                            ],
+                            "label-caps": [
+                                    "12px",
+                                    {
+                                            "lineHeight": "16px",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "body-md": [
+                                    "16px",
+                                    {
+                                            "lineHeight": "24px",
+                                            "fontWeight": "500"
+                                    }
+                            ]
+                    }
+            },
+                },
+        }
+    </script>
+<style>
+        body {
+            background-color: #abcec1; /* Mint green fallback, ideally use config primary-fixed-dim but user requested Mint green background specifically. Inverse-primary matches this hex. */
+            min-height: max(884px, 100dvh);
+        }
+
+        .btn-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2.5s infinite linear;
+            pointer-events: none;
+        }
+        @keyframes shimmer {
+            100% { left: 200%; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0;
+            animation: particle-burst 0.6s ease-out forwards;
+            font-size: 24px;
+            z-index: 9999;
+        }
+        @keyframes particle-burst {
+            0% { transform: translate(-50%, -50%) scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.2) rotate(var(--rot)); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-inverse-primary min-h-screen flex flex-col font-body-md text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="bg-secondary text-on-secondary shadow-[4px_4px_0px_0px_rgba(26,28,27,1)] border-b-[3px] border-on-surface flex justify-between items-center w-full px-container-padding h-16 docked full-width top-0 z-50 sticky">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-secondary" data-icon="pets">pets</span>
+<span class="font-pixel-data text-headline-sm text-on-secondary uppercase tracking-widest font-bold">PLANTÃO_VET.EXE</span>
+</div>
+<button class="flex items-center justify-center w-10 h-10 rounded border-2 border-transparent hover:border-on-surface hover:bg-secondary-fixed transition-colors active:translate-y-[2px] active:translate-x-[2px]">
+<span class="material-symbols-outlined text-on-secondary" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow p-container-padding md:p-8 flex flex-col items-center justify-center w-full max-w-4xl mx-auto pb-24 md:pb-8">
+<!-- Y2K Chat Window Card -->
+<div class="w-full bg-[#FFF3C7] rounded-lg border-[3px] border-on-surface shadow-[4px_4px_0px_0px_rgba(26,28,27,1)] overflow-hidden flex flex-col max-h-[707px]">
+<!-- Title Bar -->
+<div class="bg-[#FF9EC6] border-b-[3px] border-on-surface px-4 py-3 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface font-bold" data-icon="chat">chat</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wide">Prévia da Mensagem</h2>
+</div>
+<div class="flex gap-1">
+<div class="w-3 h-3 rounded-full border-[2px] border-on-surface bg-surface"></div>
+<div class="w-3 h-3 rounded-full border-[2px] border-on-surface bg-surface"></div>
+<div class="w-3 h-3 rounded-full border-[2px] border-on-surface bg-surface"></div>
+</div>
+</div>
+<!-- Message Content Area -->
+<div class="p-4 md:p-6 overflow-y-auto bg-[#FFFDF7] flex-grow">
+<div class="font-body-md text-body-md text-on-surface whitespace-pre-wrap leading-relaxed animate-fade-in-up opacity-0" style="animation-delay: 0.1s;">
+🐾 *PASSAGEM DE PLANTÃO* 🐾
+
+📋 *IDENTIFICAÇÃO*
+*Paciente:* Thor
+*Espécie:* Canina
+*Tutor:* Maria Oliveira
+
+🩺 *QUADRO CLÍNICO*
+Paciente deu entrada apresentando êmese intensa e letargia. 
+Foi estabilizado, mas requer monitoramento contínuo da pressão arterial.
+
+💊 *MEDICAÇÕES*
+- Ondansetrona (2mg/ml) - 1ml IV às 08h
+- Dipirona (500mg/ml) - 0.5ml IV às 10h
+
+⚠️ *OBSERVAÇÕES*
+Acesso venoso na pata dianteira direita. Tutor ligou às 09h querendo notícias.
+
+⏰ *PRÓXIMOS PASSOS*
+Refazer hemograma às 14h.
+                </div>
+</div>
+<!-- Action Buttons Area -->
+<div class="bg-surface-container border-t-[3px] border-on-surface p-4 flex flex-col md:flex-row gap-3 md:justify-end items-center">
+<button class="w-full md:w-auto bg-[#FFF3C7] border-[3px] border-on-surface rounded-md px-6 py-3 font-headline-sm text-body-lg text-on-surface shadow-[4px_4px_0px_0px_rgba(26,28,27,1)] hover:bg-[#ffeaaa] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(26,28,27,1)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+                    Editar
+                </button>
+<button class="w-full md:w-auto bg-[#FF9EC6] border-[3px] border-on-surface rounded-md px-6 py-3 font-headline-sm text-body-lg text-on-surface shadow-[4px_4px_0px_0px_rgba(26,28,27,1)] hover:bg-[#ff85b5] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(26,28,27,1)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2" id="btn-copiar">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+                    Copiar
+                </button>
+<button class="w-full md:w-auto bg-[#FF7A45] border-[3px] border-on-surface rounded-md px-8 py-3 font-headline-sm text-body-lg text-on-primary font-bold shadow-[4px_4px_0px_0px_rgba(26,28,27,1)] hover:bg-[#e86a38] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(26,28,27,1)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2 btn-shimmer" id="btn-enviar">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+                    Enviar WhatsApp
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Hidden on desktop, shown on mobile) -->
+<nav class="md:hidden bg-surface text-primary border-t-[3px] border-on-surface fixed bottom-0 left-0 w-full flex justify-around items-center px-gutter py-2 z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps mt-1">Início</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 -translate-y-1 shadow-[4px_4px_0px_0px_rgba(26,28,27,1)] border-2 border-on-surface active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+<span class="font-label-caps text-label-caps mt-1 font-bold">Pacientes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-caps text-label-caps mt-1">Histórico</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps mt-1">Perfil</span>
+</a>
+</nav>
+<script>
+        // Simple script to handle button clicks for visual feedback
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.classList.add('translate-y-[4px]', 'translate-x-[4px]', 'shadow-none');
+            });
+            button.addEventListener('mouseup', function() {
+                this.classList.remove('translate-y-[4px]', 'translate-x-[4px]', 'shadow-none');
+            });
+            button.addEventListener('mouseleave', function() {
+                this.classList.remove('translate-y-[4px]', 'translate-x-[4px]', 'shadow-none');
+            });
+        });
+
+        // Celebration burst on specific buttons
+        document.querySelectorAll('#btn-copiar, #btn-enviar').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const emojis = ['✨', '💖', '⭐', '🐾'];
+                const rect = this.getBoundingClientRect();
+                const x = rect.left + rect.width / 2;
+                const y = rect.top + rect.height / 2;
+
+                for (let i = 0; i < 8; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    particle.style.left = x + 'px';
+                    particle.style.top = y + 'px';
+                    
+                    const angle = (Math.PI * 2 * i) / 8 + (Math.random() * 0.5);
+                    const velocity = 50 + Math.random() * 40;
+                    const tx = Math.cos(angle) * velocity;
+                    const ty = Math.sin(angle) * velocity;
+                    
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    particle.style.setProperty('--rot', `${Math.random() * 360}deg`);
+                    
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 600);
+                }
+            });
+        });
+    </script>
+</body></html>
