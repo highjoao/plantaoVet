@@ -5,6 +5,7 @@ import HandoverFormScreen from "./screens/HandoverFormScreen";
 import HistoryScreen from "./screens/HistoryScreen";
 import PreviewScreen from "./screens/PreviewScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import SecretBirthdayScreen from "./screens/SecretBirthdayScreen";
 import TemplateSelectionScreen from "./screens/TemplateSelectionScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import type { HandoverData, TemplateType } from "./types/handover";
@@ -14,7 +15,14 @@ import { addHistoryItem, loadProfile, type HistoryItem } from "./utils/storage";
 import { useHandoverStore } from "./hooks/useHandoverStore";
 import { useToast } from "./hooks/useToast";
 
-type Screen = "welcome" | "templates" | "form" | "preview" | "history" | "profile";
+type Screen =
+  | "welcome"
+  | "templates"
+  | "form"
+  | "preview"
+  | "history"
+  | "profile"
+  | "secretBirthday";
 
 /** id curto e único o suficiente para itens de histórico locais. */
 function makeId(): string {
@@ -121,7 +129,7 @@ export default function App() {
   let navActive: NavKey;
   if (screen === "welcome") navActive = "home";
   else if (screen === "history") navActive = "history";
-  else if (screen === "profile") navActive = "profile";
+  else if (screen === "profile" || screen === "secretBirthday") navActive = "profile";
   else if (screen === "preview" && fromHistory) navActive = "history";
   else navActive = "models";
 
@@ -179,7 +187,20 @@ export default function App() {
       background = "bg-primary-container";
       showBack = true;
       onBack = goHome;
-      content = <ProfileScreen showToast={toast.show} onProfileChange={refreshSignature} />;
+      content = (
+        <ProfileScreen
+          showToast={toast.show}
+          onProfileChange={refreshSignature}
+          onUnlockSecret={() => setScreen("secretBirthday")}
+        />
+      );
+      break;
+    case "secretBirthday":
+      background = "bg-pattern";
+      showBack = true;
+      onBack = goProfile;
+      hideNav = true;
+      content = <SecretBirthdayScreen onBack={goProfile} />;
       break;
   }
 

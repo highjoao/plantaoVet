@@ -3,12 +3,15 @@ import BrutalButton from "../components/BrutalButton";
 import BrutalInput from "../components/BrutalInput";
 import BrutalTextarea from "../components/BrutalTextarea";
 import PixelPetMonitor from "../components/PixelPetMonitor";
+import SecretCodeModal from "../components/SecretCodeModal";
 import { clearProfile, loadProfile, saveProfile, type ProfileData } from "../utils/storage";
 
 interface ProfileScreenProps {
   showToast: (message: string, icon?: string) => void;
   /** Notifica o App para recarregar a assinatura usada nas mensagens. */
   onProfileChange: () => void;
+  /** Abre a tela-surpresa após o código correto. */
+  onUnlockSecret: () => void;
 }
 
 const EMPTY: ProfileData = { vetName: "", clinic: "", signature: "" };
@@ -18,8 +21,13 @@ const EMPTY: ProfileData = { vetName: "", clinic: "", signature: "" };
  * Mantém a linguagem visual: card retro com o gatinho no monitor e inputs
  * brutalistas. Tudo persistido localmente (sem backend).
  */
-export default function ProfileScreen({ showToast, onProfileChange }: ProfileScreenProps) {
+export default function ProfileScreen({
+  showToast,
+  onProfileChange,
+  onUnlockSecret,
+}: ProfileScreenProps) {
   const [profile, setProfile] = useState<ProfileData>(() => loadProfile());
+  const [secretOpen, setSecretOpen] = useState(false);
 
   function update(key: keyof ProfileData, value: string) {
     setProfile((prev) => ({ ...prev, [key]: value }));
@@ -73,7 +81,7 @@ export default function ProfileScreen({ showToast, onProfileChange }: ProfileScr
             label="Assinatura padrão"
             value={profile.signature}
             onChange={(e) => update("signature", e.target.value)}
-            placeholder="Ex: Dra. Bárbara — Hospital Vet Luna 🐾"
+            placeholder="Ex: Dra. Bárbara — Hospital +Pet 🐾"
           />
         </div>
 
@@ -98,9 +106,26 @@ export default function ProfileScreen({ showToast, onProfileChange }: ProfileScr
         </div>
 
         <p className="font-pixel-data text-pixel-data text-on-surface-variant text-center opacity-80">
-          A assinatura entra no final das mensagens geradas. 💗
+          A assinatura entra no final das mensagens geradas.{" "}
+          <button
+            type="button"
+            onClick={() => setSecretOpen(true)}
+            aria-label="Abrir código especial"
+            className="cursor-pointer bg-transparent border-0 p-0 m-0 align-baseline"
+          >
+            💗💗💗💗
+          </button>
         </p>
       </div>
+
+      <SecretCodeModal
+        open={secretOpen}
+        onClose={() => setSecretOpen(false)}
+        onSuccess={() => {
+          setSecretOpen(false);
+          onUnlockSecret();
+        }}
+      />
     </div>
   );
 }
