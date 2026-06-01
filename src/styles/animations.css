@@ -15,6 +15,27 @@
   overflow: hidden;
 }
 
+/* ---- Chuvinha de sushi (apenas Home) ---- */
+.sushi-rain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.sushi-item {
+  position: absolute;
+  top: 0;
+  display: block;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+/* Modo estático (prefers-reduced-motion): posição/opacidade via inline style. */
+.sushi-item--static {
+  will-change: auto;
+}
+
 /* ---- Brilho deslizante em botões (Home) ---- */
 .btn-shine {
   position: relative;
@@ -70,6 +91,29 @@
     }
     100% {
       left: 100%;
+    }
+  }
+
+  /* Queda suave da chuvinha de sushi (Home) */
+  .sushi-item--fall {
+    opacity: 0;
+    will-change: transform, opacity;
+    animation: sushiFall var(--duration, 18s) linear var(--delay, 0s) infinite;
+  }
+  @keyframes sushiFall {
+    0% {
+      transform: translateY(-18vh) rotate(0deg);
+      opacity: 0;
+    }
+    12% {
+      opacity: var(--peak, 0.6);
+    }
+    88% {
+      opacity: var(--peak, 0.6);
+    }
+    100% {
+      transform: translateY(115vh) rotate(var(--rotation, 360deg));
+      opacity: 0;
     }
   }
 

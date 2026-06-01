@@ -1,6 +1,6 @@
 import BrutalButton from "../components/BrutalButton";
-import FloatingDecorations from "../components/FloatingDecorations";
-import PixelPetMonitor from "../components/PixelPetMonitor";
+import PixelDogMonitor from "../components/PixelDogMonitor";
+import SushiRain from "../components/SushiRain";
 
 interface WelcomeScreenProps {
   onNew: () => void;
@@ -15,11 +15,11 @@ interface WelcomeScreenProps {
 export default function WelcomeScreen({ onNew, onViewSample }: WelcomeScreenProps) {
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-container-padding pb-32 min-h-[calc(100dvh-64px)]">
-      <FloatingDecorations variant="particles" />
+      <SushiRain />
 
       <div className="bg-secondary-container border-3 border-on-surface neo-shadow rounded-lg w-full max-w-sm flex flex-col items-center p-6 text-center animate-pop-in">
         <div className="bg-surface border-3 border-on-surface p-2 mb-6 neo-shadow rounded rotate-[-2deg] hover:rotate-0 transition-transform">
-          <PixelPetMonitor className="w-32 h-24 border-2 border-on-surface block" />
+          <PixelDogMonitor className="w-32 h-24 border-2 border-on-surface block" />
         </div>
 
         <h2 className="font-headline-lg text-headline-lg text-on-surface mb-2">PlantãoVet</h2>
