@@ -1,32 +1,41 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import AppShell from "./components/AppShell";
 import type { NavKey } from "./components/BottomNav";
 import HandoverFormScreen from "./screens/HandoverFormScreen";
+import HistoryScreen from "./screens/HistoryScreen";
 import PreviewScreen from "./screens/PreviewScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 import TemplateSelectionScreen from "./screens/TemplateSelectionScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import type { HandoverData, TemplateType } from "./types/handover";
 import { buildWhatsappMessage } from "./utils/buildWhatsappMessage";
 import { getSampleHandover, isHandoverEmpty } from "./utils/createHandover";
+import { addHistoryItem, loadProfile, type HistoryItem } from "./utils/storage";
 import { useHandoverStore } from "./hooks/useHandoverStore";
 import { useToast } from "./hooks/useToast";
 
-type Screen = "welcome" | "templates" | "form" | "preview";
+type Screen = "welcome" | "templates" | "form" | "preview" | "history" | "profile";
+
+/** id curto e único o suficiente para itens de histórico locais. */
+function makeId(): string {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
 
 export default function App() {
   const store = useHandoverStore();
   const toast = useToast();
   const [screen, setScreen] = useState<Screen>("welcome");
-  // Dados exibidos na prévia (plantão atual ou exemplo de "Ver modelo").
+  // Dados do plantão atual (usados ao editar a partir da prévia).
   const [previewData, setPreviewData] = useState<HandoverData>(store.handover);
-
-  const previewMessage = useMemo(() => buildWhatsappMessage(previewData), [previewData]);
+  // Mensagem exibida na prévia (calculada ao navegar — estática na tela).
+  const [previewMessage, setPreviewMessage] = useState("");
+  // true quando a prévia veio do histórico (volta para o histórico, não edita).
+  const [fromHistory, setFromHistory] = useState(false);
+  // Assinatura padrão atual (recarregada quando o perfil muda).
+  const [signature, setSignature] = useState(() => loadProfile().signature);
 
   function handleSettings() {
     toast.show("Configurações em breve 💗", "settings");
-  }
-  function handleUnavailable(label: string) {
-    toast.show(`${label}: em breve 💗`, "schedule");
   }
 
   function goHome() {
@@ -35,28 +44,86 @@ export default function App() {
   function goTemplates() {
     setScreen("templates");
   }
+  function goHistory() {
+    setScreen("history");
+  }
+  function goProfile() {
+    setScreen("profile");
+  }
+
+  function navigate(key: NavKey) {
+    if (key === "home") goHome();
+    else if (key === "models") goTemplates();
+    else if (key === "history") goHistory();
+    else if (key === "profile") goProfile();
+  }
+
   function selectTemplate(type: TemplateType) {
     store.loadTemplate(type);
     setScreen("form");
   }
+
   function generate() {
     if (isHandoverEmpty(store.handover)) {
       toast.show("Preencha ao menos um campo 🐾", "edit");
       return;
     }
+    const message = buildWhatsappMessage(store.handover, signature);
     setPreviewData(store.handover);
+    setPreviewMessage(message);
+    setFromHistory(false);
+    // Salva no histórico local (dedup de mensagem repetida é feito no storage).
+    const item: HistoryItem = {
+      id: makeId(),
+      createdAt: new Date().toISOString(),
+      templateType: store.handover.templateType,
+      patientName: store.handover.identification.patientName,
+      message,
+    };
+    addHistoryItem(item);
     setScreen("preview");
   }
+
   function viewSample() {
-    setPreviewData(getSampleHandover());
+    const sample = getSampleHandover();
+    setPreviewData(sample);
+    setPreviewMessage(buildWhatsappMessage(sample, signature));
+    setFromHistory(false);
     setScreen("preview");
   }
+
+  function viewHistoryItem(item: HistoryItem) {
+    setPreviewMessage(item.message);
+    setFromHistory(true);
+    setScreen("preview");
+  }
+
   function editFromPreview() {
     store.setHandover(previewData);
     setScreen("form");
   }
 
-  const navActive: NavKey = screen === "welcome" ? "home" : "patients";
+  // "Voltar"/"Editar" da prévia: histórico volta ao histórico; fluxo normal edita.
+  function leavePreview() {
+    if (fromHistory) {
+      setFromHistory(false);
+      goHistory();
+    } else {
+      editFromPreview();
+    }
+  }
+
+  function refreshSignature() {
+    setSignature(loadProfile().signature);
+  }
+
+  // Aba ativa do dock, derivada da tela atual.
+  let navActive: NavKey;
+  if (screen === "welcome") navActive = "home";
+  else if (screen === "history") navActive = "history";
+  else if (screen === "profile") navActive = "profile";
+  else if (screen === "preview" && fromHistory) navActive = "history";
+  else navActive = "models";
 
   let content;
   let background = "bg-pattern";
@@ -97,10 +164,22 @@ export default function App() {
     case "preview":
       background = "bg-inverse-primary";
       showBack = true;
-      onBack = editFromPreview;
+      onBack = leavePreview;
       content = (
-        <PreviewScreen message={previewMessage} onEdit={editFromPreview} showToast={toast.show} />
+        <PreviewScreen message={previewMessage} onEdit={leavePreview} showToast={toast.show} />
       );
+      break;
+    case "history":
+      background = "bg-primary-container";
+      showBack = true;
+      onBack = goHome;
+      content = <HistoryScreen onView={viewHistoryItem} showToast={toast.show} />;
+      break;
+    case "profile":
+      background = "bg-primary-container";
+      showBack = true;
+      onBack = goHome;
+      content = <ProfileScreen showToast={toast.show} onProfileChange={refreshSignature} />;
       break;
   }
 
@@ -111,8 +190,7 @@ export default function App() {
       onBack={onBack}
       onSettings={handleSettings}
       navActive={navActive}
-      onHome={goHome}
-      onUnavailable={handleUnavailable}
+      onNavigate={navigate}
       hideNav={hideNav}
       toastMessage={toast.message}
       toastIcon={toast.icon}

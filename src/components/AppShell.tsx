@@ -10,8 +10,7 @@ interface AppShellProps {
   onBack?: () => void;
   onSettings?: () => void;
   navActive: NavKey;
-  onHome: () => void;
-  onUnavailable: (label: string) => void;
+  onNavigate: (key: NavKey) => void;
   /** Oculta o dock inferior (tela de formulário usa barra de ação própria). */
   hideNav?: boolean;
   toastMessage: string | null;
@@ -31,8 +30,7 @@ export default function AppShell({
   onBack,
   onSettings,
   navActive,
-  onHome,
-  onUnavailable,
+  onNavigate,
   hideNav = false,
   toastMessage,
   toastIcon,
@@ -43,7 +41,7 @@ export default function AppShell({
     <div className={`relative min-h-[100dvh] flex flex-col text-on-surface ${background}`}>
       <TopBar showBack={showBack} onBack={onBack} onSettings={onSettings} />
       <main className={`flex-1 relative z-10 ${mainClassName}`}>{children}</main>
-      {!hideNav && <BottomNav active={navActive} onHome={onHome} onUnavailable={onUnavailable} />}
+      {!hideNav && <BottomNav active={navActive} onNavigate={onNavigate} />}
       <Toast message={toastMessage} icon={toastIcon} />
     </div>
   );

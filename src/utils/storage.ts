@@ -4,6 +4,8 @@ import type { HandoverData, TemplateType } from "../types/handover";
 const DRAFT_KEY = "plantaovet:draft";
 const TEMPLATE_KEY = "plantaovet:lastTemplate";
 const CUSTOM_FIELDS_KEY = "plantaovet:customFieldDefs";
+const HISTORY_KEY = "plantaovet:history";
+const PROFILE_KEY = "plantaovet:profile";
 
 function safeGet(key: string): string | null {
   try {
@@ -84,4 +86,76 @@ export function loadCustomFieldDefs(): StoredCustomFieldDef[] {
 
 export function saveCustomFieldDefs(defs: StoredCustomFieldDef[]): void {
   safeSet(CUSTOM_FIELDS_KEY, JSON.stringify(defs));
+}
+
+/**
+ * Histórico local de passagens geradas neste dispositivo. Guardamos apenas o
+ * essencial para reexibir/copiar/enviar — não é um banco de pacientes.
+ */
+export interface HistoryItem {
+  id: string;
+  createdAt: string;
+  templateType: TemplateType;
+  patientName?: string;
+  message: string;
+}
+
+const HISTORY_LIMIT = 20;
+
+export function loadHistory(): HistoryItem[] {
+  const raw = safeGet(HISTORY_KEY);
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as HistoryItem[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Adiciona um item ao histórico (mais recente primeiro), limitando a 20.
+ * Evita duplicar a mesma mensagem do item mais recente (ida e volta na prévia).
+ */
+export function addHistoryItem(item: HistoryItem): void {
+  const list = loadHistory();
+  if (list[0]?.message === item.message) return;
+  const next = [item, ...list].slice(0, HISTORY_LIMIT);
+  safeSet(HISTORY_KEY, JSON.stringify(next));
+}
+
+export function clearHistory(): void {
+  safeRemove(HISTORY_KEY);
+}
+
+/** Perfil da veterinária (exibição/personalização). Tudo local. */
+export interface ProfileData {
+  vetName: string;
+  clinic: string;
+  signature: string;
+}
+
+const EMPTY_PROFILE: ProfileData = { vetName: "", clinic: "", signature: "" };
+
+export function loadProfile(): ProfileData {
+  const raw = safeGet(PROFILE_KEY);
+  if (!raw) return { ...EMPTY_PROFILE };
+  try {
+    const parsed = JSON.parse(raw) as Partial<ProfileData>;
+    return {
+      vetName: parsed.vetName ?? "",
+      clinic: parsed.clinic ?? "",
+      signature: parsed.signature ?? "",
+    };
+  } catch {
+    return { ...EMPTY_PROFILE };
+  }
+}
+
+export function saveProfile(data: ProfileData): void {
+  safeSet(PROFILE_KEY, JSON.stringify(data));
+}
+
+export function clearProfile(): void {
+  safeRemove(PROFILE_KEY);
 }

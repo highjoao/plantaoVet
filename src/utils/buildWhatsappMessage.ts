@@ -18,9 +18,10 @@ function labeledLine(label: string, value: string): string {
  * - markdown do WhatsApp (*negrito* para títulos e rótulos);
  * - campos vazios são ignorados (sem linhas em branco inúteis);
  * - campos personalizados entram na seção correta;
- * - inclui o tipo de modelo quando ajuda (exceto "Personalizado").
+ * - inclui o tipo de modelo quando ajuda (exceto "Personalizado");
+ * - se houver assinatura padrão (perfil), é anexada ao final.
  */
-export function buildWhatsappMessage(handover: HandoverData): string {
+export function buildWhatsappMessage(handover: HandoverData, signature?: string): string {
   const blocks: string[] = [];
 
   // Cabeçalho
@@ -54,5 +55,12 @@ export function buildWhatsappMessage(handover: HandoverData): string {
     }
   }
 
-  return blocks.join("\n\n").trim();
+  let message = blocks.join("\n\n").trim();
+
+  // Assinatura padrão (opcional): só anexa quando preenchida.
+  if (typeof signature === "string" && signature.trim().length > 0) {
+    message += `\n\n—\n${signature.trim()}`;
+  }
+
+  return message;
 }
