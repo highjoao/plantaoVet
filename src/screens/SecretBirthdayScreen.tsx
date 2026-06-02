@@ -34,7 +34,7 @@ export default function SecretBirthdayScreen({ onBack }: SecretBirthdayScreenPro
           </p>
 
           {/* Moldura retrô do vídeo */}
-          <div className="w-full bg-[#FFF3C7] border-3 border-on-surface neo-shadow rounded-md p-2">
+          <div className="w-full max-w-full overflow-hidden bg-[#FFF3C7] border-3 border-on-surface neo-shadow rounded-md p-2">
             {videoFailed ? (
               <div className="flex flex-col items-center justify-center gap-3 py-10 px-4">
                 <Icon name="favorite" fill className="text-4xl text-[#FF7A45]" />

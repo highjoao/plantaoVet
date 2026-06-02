@@ -13,9 +13,14 @@
 }
 
 html,
-body {
+body,
+#root {
   margin: 0;
   padding: 0;
+  width: 100%;
+  min-height: 100%;
+  /* Evita scroll/zoom horizontal indevido no mobile (iOS Safari). */
+  overflow-x: hidden;
 }
 
 body {
@@ -88,10 +93,11 @@ body {
   .input-brutal {
     background-color: #fffdf7;
     border: 3px solid #2d2d2d;
-    padding: 12px;
+    padding: 11px 12px;
     min-height: 48px;
     font-family: "Space Mono", monospace;
-    font-size: 14px;
+    /* 16px evita o zoom automático do iOS Safari ao focar o campo. */
+    font-size: 16px;
     line-height: 20px;
     color: #1a1c1b;
     width: 100%;
