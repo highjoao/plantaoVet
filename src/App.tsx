@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import AppShell from "./components/AppShell";
 import type { NavKey } from "./components/BottomNav";
 import HandoverFormScreen from "./screens/HandoverFormScreen";
@@ -125,6 +126,24 @@ export default function App() {
     setSignature(loadProfile().signature);
   }
 
+  // Reflete a tela-surpresa na URL como "/surpresa" para que o Vercel Analytics
+  // registre uma visualização identificável — sem alterar o roteamento por
+  // estado do app (continua SPA). Ao sair, restaura a URL para "/".
+  useEffect(() => {
+    if (screen === "secretBirthday") {
+      if (window.location.pathname !== "/surpresa") {
+        window.history.pushState({}, "", "/surpresa");
+      }
+      // Se o usuário usar o "voltar" do navegador, volta ao Perfil.
+      const onPop = () => setScreen("profile");
+      window.addEventListener("popstate", onPop);
+      return () => window.removeEventListener("popstate", onPop);
+    }
+    if (window.location.pathname === "/surpresa") {
+      window.history.pushState({}, "", "/");
+    }
+  }, [screen]);
+
   // Aba ativa do dock, derivada da tela atual.
   let navActive: NavKey;
   if (screen === "welcome") navActive = "home";
@@ -205,18 +224,21 @@ export default function App() {
   }
 
   return (
-    <AppShell
-      background={background}
-      showBack={showBack}
-      onBack={onBack}
-      onSettings={handleSettings}
-      navActive={navActive}
-      onNavigate={navigate}
-      hideNav={hideNav}
-      toastMessage={toast.message}
-      toastIcon={toast.icon}
-    >
-      {content}
-    </AppShell>
+    <>
+      <AppShell
+        background={background}
+        showBack={showBack}
+        onBack={onBack}
+        onSettings={handleSettings}
+        navActive={navActive}
+        onNavigate={navigate}
+        hideNav={hideNav}
+        toastMessage={toast.message}
+        toastIcon={toast.icon}
+      >
+        {content}
+      </AppShell>
+      <Analytics />
+    </>
   );
 }
