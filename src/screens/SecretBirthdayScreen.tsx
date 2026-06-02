@@ -21,10 +21,10 @@ export default function SecretBirthdayScreen({ onBack }: SecretBirthdayScreenPro
     <div className="flex flex-col px-container-padding max-w-2xl mx-auto w-full gap-4 pt-4 pb-10">
       {/* Janela retrô */}
       <div className="bg-secondary-container border-3 border-on-surface neo-shadow rounded-lg overflow-hidden animate-pop-in">
-          <div className="bg-[#FF9EC6] border-b-3 border-on-surface px-4 py-2 flex items-center justify-center gap-2 text-center">
-          <Icon name="cake" fill className="text-on-surface" />
-          <h1 className="font-headline-md text-headline-md text-on-surface m-0">
-          Uma mensagem só pra você 💗
+        <div className="bg-[#FF9EC6] border-b-3 border-on-surface px-4 py-4 min-h-[96px] flex items-center justify-center text-center">
+          <h1 className="font-headline-md text-[24px] leading-[30px] text-on-surface m-0 max-w-[240px] mx-auto text-center">
+            Uma mensagem só pra você
+            <span className="block text-[26px] leading-none mt-1">🎂 💗</span>
           </h1>
         </div>
 
