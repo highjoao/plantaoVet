@@ -11,7 +11,8 @@ import TemplateSelectionScreen from "./screens/TemplateSelectionScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import type { HandoverData, TemplateType } from "./types/handover";
 import { buildWhatsappMessage } from "./utils/buildWhatsappMessage";
-import { getSampleHandover, isHandoverEmpty } from "./utils/createHandover";
+import { isHandoverEmpty } from "./utils/createHandover";
+import { INTERNACAO_COMUM_SAMPLE_MESSAGE } from "./data/sampleMessages";
 import { addHistoryItem, loadProfile, type HistoryItem } from "./utils/storage";
 import { useHandoverStore } from "./hooks/useHandoverStore";
 import { useToast } from "./hooks/useToast";
@@ -94,9 +95,7 @@ export default function App() {
   }
 
   function viewSample() {
-    const sample = getSampleHandover();
-    setPreviewData(sample);
-    setPreviewMessage(buildWhatsappMessage(sample, signature));
+    setPreviewMessage(INTERNACAO_COMUM_SAMPLE_MESSAGE);
     setFromHistory(false);
     setScreen("preview");
   }
