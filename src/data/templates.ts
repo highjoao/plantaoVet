@@ -50,19 +50,13 @@ export const TEMPLATES: Record<TemplateType, TemplateMeta> = {
   internacao: {
     type: "internacao",
     code: "TEMPLATE_01",
-    title: "Internação",
+    title: "Internação comum",
     description: "Rotina geral e monitoramento",
     headerIcon: "local_hospital",
     avatarIcon: "pets",
     cardBg: "#fdd5e7",
     headerBg: "#e3bcce",
-    extraFields: [
-      preset("internacao", "parameters", "Fluidoterapia"),
-      preset("internacao", "parameters", "Acesso venoso"),
-      preset("internacao", "clinical", "Sinais de dor"),
-      preset("internacao", "feedingElimination", "Aceitação alimentar"),
-      preset("internacao", "pending", "Monitoramento necessário", "textarea"),
-    ],
+    extraFields: [],
   },
   uti: {
     type: "uti",

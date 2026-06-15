@@ -10,6 +10,8 @@ interface CustomFieldModalProps {
   defaultSection?: SectionKey;
   onClose: () => void;
   onAdd: (field: CustomFieldEntry) => void;
+  /** Seções disponíveis no seletor (padrão: SECTION_ORDER genérico). */
+  sectionOrder?: SectionKey[];
 }
 
 const TYPE_OPTIONS: { value: FieldType; label: string }[] = [
@@ -39,7 +41,9 @@ export default function CustomFieldModal({
   defaultSection = "identification",
   onClose,
   onAdd,
+  sectionOrder,
 }: CustomFieldModalProps) {
+  const effectiveSectionOrder = sectionOrder ?? SECTION_ORDER;
   const titleId = useId();
   const [label, setLabel] = useState("");
   const [type, setType] = useState<FieldType>("text");
@@ -192,7 +196,7 @@ export default function CustomFieldModal({
                 value={section}
                 onChange={(e) => setSection(e.target.value as SectionKey)}
               >
-                {SECTION_ORDER.map((key) => (
+                {effectiveSectionOrder.map((key) => (
                   <option key={key} value={key}>
                     {SECTIONS[key].title}
                   </option>

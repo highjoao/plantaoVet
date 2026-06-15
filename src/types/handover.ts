@@ -19,7 +19,12 @@ export type SectionKey =
   | "feedingElimination"
   | "medications"
   | "evolution"
-  | "pending";
+  | "pending"
+  // Internação comum
+  | "subjetivo"
+  | "objetivo"
+  | "avaliacaoInternacao"
+  | "planoInternacao";
 
 /** Campo dinâmico: tanto campos extras pré-carregados por template quanto
  *  campos criados pelo usuário ("+ adicionar campo"). */
@@ -42,6 +47,12 @@ export interface IdentificationData {
   breed: string;
   weight: string;
   bed: string;
+  // Internação comum (opcional: compatível com rascunhos antigos)
+  admittingVet?: string;
+  partnerVet?: string;
+  firstHospitalizationDateTime?: string;
+  suspicionsDiagnosis?: string;
+  shiftResponsible?: string;
 }
 
 export interface ClinicalData {
@@ -89,6 +100,45 @@ export interface PendingData {
   attentionPoints: string;
 }
 
+// ─── Internação Comum ───────────────────────────────────────────────
+
+export interface SubjetivoData {
+  behaviorConsciousness: string;
+  feedingWaterIntake: string;
+  urineFeces: string;
+}
+
+export interface ObjetivoData {
+  clinicalParameters: string;
+  painAssessment: string;
+  woundLesionAssessment: string;
+  neurologicalExam: string;
+  orthopedicExam: string;
+  reticulocytes: string;
+  bloodCount: string;
+  biochemistry: string;
+  venousBloodGas: string;
+  imagingMorning: string;
+  imagingAfternoon: string;
+  imagingNight: string;
+}
+
+export interface AvaliacaoInternacaoData {
+  assessment: string;
+  therapeuticConduct: string;
+  fluidTherapy: string;
+  continuousInfusion: string;
+  medications: string;
+  performedProcedures: string;
+}
+
+export interface PlanoInternacaoData {
+  generalPlanClassification: string;
+  nextStepsPatient: string;
+  tutorAlignment: string;
+  tutorBulletin: string;
+}
+
 export interface HandoverData {
   templateType: TemplateType;
   identification: IdentificationData;
@@ -99,6 +149,11 @@ export interface HandoverData {
   evolution: EvolutionData;
   pending: PendingData;
   customFields: CustomFieldEntry[];
+  // Internação comum (opcional: preserva rascunhos antigos)
+  subjetivo?: SubjetivoData;
+  objetivo?: ObjetivoData;
+  avaliacaoInternacao?: AvaliacaoInternacaoData;
+  planoInternacao?: PlanoInternacaoData;
 }
 
 /** Definição de um campo fixo de uma seção, usada para render + mensagem. */
